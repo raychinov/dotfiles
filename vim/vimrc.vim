@@ -54,19 +54,3 @@ noremap <Down>  <NOP>
 noremap <Left>  <NOP>
 noremap <Right> <NOP>
 
-
-"The temp dir shoudl exist
-" if isdirectory("~/.vim/vim-temp") == 0
-" 	:silent !mkdir -p ~/.vim/vim-temp >/dev/null 2>&1
-" endif
-"
-" set backupdir=~/.vim/vim-temp " in order of preference
-" set backup
-" set directory=~/.vim/vim-temp
-" set viminfo=~/.vim/vim-temp
-" set viminfo+=n~/.vim/viminfo
-"
-" if exists("+undofile")
-" 	set undodir=~/.vim/vim-temp
-" 	set undofile
-" endif
