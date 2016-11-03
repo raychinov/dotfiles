@@ -1,8 +1,13 @@
 set nocompatible
+set number
+set showcmd
+set textwidth=100
+set tabstop=4 " indent is 4 spaces long
+set shiftwidth=4 " indent is single tab
+set laststatus=2 " Always show the status line
+set cursorline " highlights the cursor line
+set hlsearch " clear whith C-L (vim-sensible)
 set clipboard=unnamedplus " shared with the OS
-set autoindent
-set incsearch
-syntax on
 
 " plugin manager
 execute pathogen#infect()
@@ -11,14 +16,6 @@ execute pathogen#infect()
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 
 " ====  Appearance ====
-set number
-set showcmd
-set textwidth=100
-set tabstop=4 " indent is 4 spaces long
-set shiftwidth=4 " indent is single tab
-set laststatus=2 " Always show the status line
-set cursorline " highlights the cursor line
-
 colorscheme solarized
 
 if has('gui_running')
@@ -32,13 +29,12 @@ if has('gui_running')
 	set guioptions-=T " remove toolbar
 	set guioptions-=r " remove right-hand scroll bar
 	set guioptions-=L " remove left-hand scroll bar
-"	set guioptions=aiA " Also works but I like it explicit
 endif
 
 " ==== Mappings ====
 map <F2> :TagbarToggle<CR>
 map <F3> :NERDTreeToggle<CR>
-map <F4> :source ~/.vim/.vimrc<CR>
+map <F4> :source ~/.vim/vimrc.vim<CR>
 map <F5> :setlocal spell! spelllang=en_us<CR>
 
 map <C-Tab> :bnext<CR>
@@ -53,4 +49,3 @@ noremap <Up>    <NOP>
 noremap <Down>  <NOP>
 noremap <Left>  <NOP>
 noremap <Right> <NOP>
-
