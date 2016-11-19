@@ -34,8 +34,9 @@ endif
 " ==== Mappings ====
 map <F2> :TagbarToggle<CR>
 map <F3> :NERDTreeToggle<CR>
-map <F4> :source ~/.vim/vimrc.vim<CR>
-map <F5> :setlocal spell! spelllang=en_us<CR>
+map <F4> :UndotreeToggle<CR>
+map <F5> :source %<CR>
+map <F6> :setlocal spell! spelllang=en_us<CR>
 
 map <C-Tab> :bnext<CR>
 map <C-S-Tab> :bprevious<CR>
