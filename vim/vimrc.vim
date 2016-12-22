@@ -1,21 +1,23 @@
 set nocompatible
 set number
 set showcmd
-set textwidth=100
+set textwidth=90
 set tabstop=4 " indent is 4 spaces long
 set shiftwidth=4 " indent is single tab
 set laststatus=2 " Always show the status line
 set cursorline " highlights the cursor line
-set hlsearch " clear whith C-L (vim-sensible)
+set hlsearch " clear with C-L (vim-sensible)
 set clipboard=unnamedplus " shared with the OS
 
 " plugin manager
 execute pathogen#infect()
+call pathogen#helptags()
 
 " Remove any trailing whitespace that is in the file
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 
 " ====  Appearance ====
+let g:solarized_termcolors=256
 colorscheme solarized
 
 if has('gui_running')
