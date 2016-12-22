@@ -1,0 +1,96 @@
+conky.config = {
+-- Create own window instead of using desktop (required in nautilus)
+	own_window = true,
+	own_window_type = 'override',
+	own_window_hints = 'below',
+
+-- Use double buffering (reduces flicker, may not work for everyone)
+	double_buffer = true,
+
+-- Fiddle with window
+	use_spacer = 'left',
+	use_xft = false,
+
+-- Update interval in seconds
+	update_interval = 3.0,
+
+-- Maximum Width of Window
+	maximum_width = 320,
+
+	draw_shades = false,
+
+-- Amplifies text if true
+	draw_outline = false,
+	draw_borders = false,
+
+-- Set to true if you want all text to be in uppercase
+	uppercase = false,
+
+	stippled_borders = 3,
+	border_width = 6,
+
+-- Default colors and also border colors
+	default_color = 'FFFFCC', -- beige color
+
+	own_window_colour = 'brown',
+	own_window_transparent = true,
+
+-- Text alignment and other possible
+	alignment = 'top_right', -- top_left, bottom_left, botton_right
+
+-- Gap between borders of screen and text
+	gap_x = 20,
+	gap_y = 20
+};
+
+-- The formatted text on screen
+conky.text = [[
+$color
+${color CC9900}SYSTEM ${hr 2}$color
+$nodename $sysname $kernel on $machine
+
+${color CC9900}CPU ${hr 2}$color
+${exec lscpu | grep 'Model name' | awk '{print $3, $4, $5, $6, $7, $8}'}
+
+Total CPU: ${cpu cpu0}%
+${color 597DB2}${cpubar}$color
+${cpugraph 000000 597DB2}
+Core 0: ${freq 1} MHz        Temprature: $color ${exec sensors|grep 'Core 0'|awk '{print $3}'}
+${cpu cpu1}% ${color 597DB2}${cpubar cpu1}$color
+Core 1: ${freq 2} MHz        Temprature: $color ${exec sensors|grep 'Core 1'|awk '{print $3}'}
+${cpu cpu2}% ${color 597DB2}${cpubar cpu2}$color
+
+NAME            PID	 CPU%  	MEM%
+${color CCFFFF}${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
+${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
+${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
+${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}$color
+
+${color CC9900}MEMORY ${hr 2}$color
+RAM Used: ${mem}	RAM Free: ${memfree}/ ${memmax}
+RAM:  $memperc%  ${color FF6600} ${membar 6}$color
+Swap: $swapperc%   ${color FF6600} ${swapbar 6}$color
+
+${color CC9900}DISK ${hr 2}$color
+sdb3 ${fs_type} (/home): ${fs_free_perc /home}% ${color FFFF33} ${fs_bar 6 /home}$color
+sdb5 ${fs_type} (root) : ${fs_free_perc /}% ${color FFFF33} ${fs_bar 6 /}$color
+
+${color CC9900}ETH (${addr enp0s25}) ${hr 2}$color
+Down: $color${downspeed enp0s25} k/s ${alignr}Up: ${upspeed enp0s25} k/s
+${downspeedgraph eth1 25,140 000000 ff0000} ${alignr}${upspeedgraph enp0s25
+25,140 000000 00ff00}$color
+Total: ${totaldown enp0s25} ${alignr}Total: ${totalup enp0s25}
+Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768
+61000 count}${alignr}Total: ${tcp_portmon 1 65535 count}
+
+${color CC9900}WIFI (${addr wlp3s0}) ${hr 2}$color
+Down: $color${downspeed wlp3s0} k/s ${alignr}Up: ${upspeed wlp3s0} k/s
+${downspeedgraph eth1 25,140 000000 ff0000} ${alignr}${upspeedgraph wlp3s0
+25,140 000000 00ff00}$color
+Total: ${totaldown wlp3s0} ${alignr}Total: ${totalup wlp3s0}
+Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768
+61000 count}${alignr}Total: ${tcp_portmon 1 65535 count}
+
+${color CC9900}LOGGING ${hr 2}$color
+${color 339900}${execi 30 tail -n2 /var/log/syslog | fold -w50}$color
+]];
