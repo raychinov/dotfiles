@@ -1,0 +1,32 @@
+# moving between dirs
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias -- -="cd -"
+
+# when I cant wait to start Vim ;]
+alias v="vim"
+alias vi="vim"
+
+# Enable aliases to be sudo’ed
+alias sudo='sudo '
+
+# sudo apt-get as it is always what you want.
+alias apt-get="sudo apt-get"
+
+# getting mp3 files with youtube-dl
+alias youtube-audio="youtube-dl -x --audio-format mp3 --audio-quality 0 --restrict-filenames"
+
+# connect with RDP
+alias taburetka='rdesktop -g 1600x822 192.168.0.99 > /dev/null 2>&1 &'
+
+# list DNS servers used by all interfaces
+alias lsdns="nmcli device show | grep IP4.DNS"
+
+# generates totp codes
+alias totp='oathtool --base32 --totp "$(cat ~/.oathtool/code.txt)"'
+
+# ----------
+# example for using alias with argumets
+alias blah='function _blah(){ echo "First: $1"; echo "Second: $2"; };_blah'
+
