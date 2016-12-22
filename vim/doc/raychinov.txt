@@ -1,0 +1,19 @@
+*raychinov.txt* Notes on my Vim usage configurations
+
+==============================================================================
+1. Mappings												*raychinov-mappings*
+
+<F2>					Toggle the TagBar panel
+						:TagbarToggle
+
+<F3>					Toggle the NERDTree panel
+						:NERDTreeToggle
+
+<F4>					Toggle the UndoTree panel
+						:UndotreeToggle
+
+<F5>					Source the currently open file
+						:source %<CR>
+
+<F6>					Do a spell check, underlining misspelled words
+						:setlocal spell! spelllang=en_us<CR>
