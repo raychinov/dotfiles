@@ -2,3 +2,5 @@ swap/*
 undo/*
 backup/*
 viminfo
+bundle/*/doc/tags
+doc/tags
