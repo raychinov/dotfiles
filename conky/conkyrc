@@ -2,14 +2,13 @@ conky.config = {
 -- Create own transparent window on the desktop
 	own_window = true,
 	own_window_type = 'override',
---own_window_type = 'desktop',
 	own_window_transparent = true,
 
 -- Use double buffering (reduces flicker, may not work for everyone)
 	double_buffer = true,
 
 -- Fiddle with window
---	use_spacer = 'left',
+	use_spacer = 'left',
 	use_xft = false,
 
 -- Update interval in seconds
@@ -28,90 +27,129 @@ conky.config = {
 -- Set to true if you want all text to be in uppercase
 	uppercase = false,
 
--- Default colors and also border colors
-	default_color = '6497b1', --b3cde0, -- http://www.color-hex.com/color-palette/1294
-
 -- Text alignment and other possible
 	alignment = 'top_right', -- top_left, bottom_left, bottom_right
 
 -- Gap between borders of screen and text
 	gap_x = 15,
-	gap_y = 25
+	gap_y = 30,
+
+-- Colors, http://www.color-hex.com/color-palette/1294
+	default_color = '6497b1', -- bars, graph frames
+	color0 = '005b96', -- Top headers
+	color1 = 'b3cde0', -- main text
+
+-- Network interfaces
+	if_up_strictness='link',
+	template0 = 'enp0s25', -- Eth
+	template1 = 'wlp3s0', -- WiFi
+
+--- Weather location IDs file
+	template2 = "$HOME/.conky/location_id"
 };
 
 -- The formatted text on screen
 conky.text = [[
-${color 005b96}SYSTEM ${hr 2}$color
-${color b3cde0}$nodename $sysname $kernel, up for $uptime_short $color
+###################
+#     SYSTEM      #
+###################
+${color0}SYSTEM ${hr 2}$color
+${color1}$nodename $sysname $kernel, up for $uptime_short $color
 
-${color 005b96}CPU ${hr 2}$color
-${color b3cde0}${exec lscpu | grep 'Model name' | awk '{print $3,$4,$5,$6,$7,$8}'}$color
+${color0}CPU ${hr 2}$color
+${color1}${exec lscpu | grep 'Model name' | awk '{print $3,$4,$5,$6,$7,$8}'}$color
 
-${color b3cde0}CPU usage: ${cpu cpu0}%$color
+###################
+#      LOAD       #
+###################
+${color1}CPU usage: ${cpu cpu0}%$color
 ${cpugraph cpu0 20,318 6497b1 6497b1}
-${color b3cde0}\
+${color1}\
 Core 0: ${freq 1} MHz ${alignr}Temperature: ${exec sensors | grep 'Core 0' | awk '{print $3}'}
 ${cpu cpu1}%$color ${color 6497b1}${alignr}${cpubar cpu1 6, 290}${color}
-${color b3cde0}\
+${color1}\
 Core 1: ${freq 2} MHz ${alignr}Temperature: ${exec sensors | grep 'Core 1' | awk '{print $3}'}
 ${cpu cpu2}%$color ${color 6497b1}${alignr}${cpubar cpu2 6, 290}$color
 
-NAME                     PID         CPU%        MEM%
-${color b3cde0}\
-${top name 1}       ${top pid 1}       ${top cpu 1}       ${top mem 1}
-${top name 2}       ${top pid 2}       ${top cpu 2}       ${top mem 2}
-${top name 3}       ${top pid 3}       ${top cpu 3}       ${top mem 3}
-${top name 4}       ${top pid 4}       ${top cpu 4}       ${top mem 4}$color
+${color0}TOP ${hr 2}${color}
+NAME${goto 132}PID${goto 217}CPU%${alignr}MEM%
+${color1}\
+${top name 1}${goto 120}${top pid 1}${goto 205}${top cpu 1}${alignr}${top mem 1}
+${top name 2}${goto 120}${top pid 2}${goto 205}${top cpu 2}${alignr}${top mem 2}
+${top name 3}${goto 120}${top pid 3}${goto 205}${top cpu 3}${alignr}${top mem 3}
+${top name 4}${goto 120}${top pid 4}${goto 205}${top cpu 4}${alignr}${top mem 4}$color
 
-${color 005b96}MEMORY ${hr 2}$color
-${color b3cde0}RAM Used: ${mem}/${memmax}
+${color0}MEMORY ${hr 2}$color
+${color1}RAM Used: ${mem}/${memmax}
 RAM:  $memperc%${color}${alignr}${membar 6,255}
-${color b3cde0}Swap: $swapperc%${color}${alignr}${swapbar 6,255}
+${color1}Swap: $swapperc%${color}${alignr}${swapbar 6,255}
 
-${color 005b96}DISK ${hr 2}$color
-# /home
-${color b3cde0}sdb3 ${fs_type} (home): ${fs_used_perc /home}%${color}${alignr}${fs_bar 6,180 /home}
-# /
-${color b3cde0}sdb5 ${fs_type} (root): ${fs_used_perc /}%${color}${alignr}${fs_bar 6,180 /}
-# Data
+###################
+#     STORAGE     #
+###################
+${color0}DISK ${hr 2}$color
+# HOME
+${color1}sdb3 ${fs_type} (home): ${fs_used_perc /home}%${color}${alignr}${fs_bar 6,180 /home}
+# ROOT
+${color1}sdb5 ${fs_type} (root): ${fs_used_perc /}%${color}${alignr}${fs_bar 6,180 /}
+# DATA
 ${if_mounted /media/edin/Data}\
-${color b3cde0}sda3 ${fs_type} (Data): ${fs_used_perc /media/edin/Data}%${color}\
+${color1}sda3 ${fs_type} (Data): ${fs_used_perc /media/edin/Data}%${color}\
 ${alignr}${fs_bar 6,180 /media/edin/Data}
 ${endif}\
-# Safe
+# SAFE
 ${if_mounted /media/edin/Safe}\
-${color b3cde0}dm-1 ${fs_type} (Safe): ${fs_free_perc /media/edin/Safe}%${color}\
+${color1}dm-1 ${fs_type} (Safe): ${fs_free_perc /media/edin/Safe}%${color}\
 ${alignr}${fs_bar 6,180 /media/edin/Safe}
 ${endif}\
 #
+###################
+#     NETWORK     #
+###################
 # Ethernet interface
-${if_existing /sys/class/net/enp0s25/operstate up}
-${color 005b96}ETH (${addr enp0s25}) ${hr 2}$color
-${color b3cde0}Down: ${downspeed enp0s25}${alignr}Up: ${upspeed enp0s25}${color}
-${downspeedgraph enp0s25 25,150 011f4b 6497b1}\
-${alignr}${upspeedgraph enp0s25 25,150 011f4b 6497b1}$color
-${color b3cde0}Total: ${totaldown enp0s25} ${alignr}Total: ${totalup enp0s25}
+${if_up $template0}
+${color0}ETH (${addr $template0}) ${hr 2}$color
+${color1}Down: ${downspeed $template0}${alignr}Up: ${upspeed $template0}${color}
+${downspeedgraph $template0 25,150 011f4b 6497b1}\
+${alignr}${upspeedgraph $template0 25,150 011f4b 6497b1}$color
+${color1}Total: ${totaldown $template0} ${alignr}Total: ${totalup $template0}
 Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768 61000 count}\
 ${alignr}Total: ${tcp_portmon 1 65535 count}
 $endif}\
 #
 # WiFi interface
-${if_existing /sys/class/net/wlp3s0/operstate up}
-${color 005b96}WiFi (${addr wlp3s0}) ${hr 2}$color
-${color b3cde0}Down: ${downspeed wlp3s0}${alignr}Up: ${upspeed wlp3s0}${color}
-${downspeedgraph wlp3s0 25,150 011f4b 6497b1}\
-${alignr}${upspeedgraph wlp3s0 25,150 011f4b 6497b1}$color
-${color b3cde0}Total: ${totaldown wlp3s0} ${alignr}Total: ${totalup wlp3s0}
+${if_up $template1}
+${color0}WiFi (${addr $template1}) ${hr 2}$color
+${color1}Down: ${downspeed $template1}${alignr}Up: ${upspeed $template1}${color}
+${downspeedgraph $template1 25,150 011f4b 6497b1}\
+${alignr}${upspeedgraph $template1 25,150 011f4b 6497b1}$color
+${color1}Total: ${totaldown $template1} ${alignr}Total: ${totalup $template1}
 Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768 61000 count}\
 ${alignr}Total: ${tcp_portmon 1 65535 count}
-SSID: $wireless_essid, ${alignr}Link: ${wireless_link_qual_perc wlp3s0}%${color} \
-${wireless_link_bar 6,150 wlp3s0}
-$endif}
-#
-# Battery
-${color 005b96}BATTERY ${hr 2}$color
-${color b3cde0}State: $battery${color} ${alignr}${battery_bar 6,180}
-${if_empty $battery_time}
-${else}${color b3cde0}Charge/Discharge time remaining: ${alignr}$battery_time${color}
+
+SSID: $wireless_essid, Channel: ${wireless_channel $template1}
+Link:${goto 20}${wireless_link_qual_perc $template1}% \
+${color}${wireless_link_bar 6 $template1}
 ${endif}
+#
+##################
+#    BATTERY     #
+##################
+# Battery
+${color0}BATTERY ${hr 2}$color
+${color1}State: $battery${color} ${battery_bar 6}
+${if_empty $battery_time} \
+${else}${color1}Charge/Discharge time remaining: ${alignr}$battery_time
+${color}${endif}
+#
+##################
+#     WEATHER    #
+##################
+# http://news.bbc.co.uk/weather/
+${color0}WEATHER ${hr 2}${color}
+${if_gw}${color1}\
+${execi 600 /usr/share/conkycolors/bin/conkyBBCWeather loc $template2 c}\
+${alignr}\
+Temperature: ${execi 600 /usr/share/conkycolors/bin/conkyBBCWeather cur $template2 c}C\
+${color}${endif}
 ]];
