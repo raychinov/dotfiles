@@ -3,9 +3,6 @@
 ==============================================================================
 1. Mappings												*raychinov-mappings*
 
-<F2>					Toggle the TagBar panel
-						:TagbarToggle
-
 <F3>					Toggle the NERDTree panel
 						:NERDTreeToggle
 
