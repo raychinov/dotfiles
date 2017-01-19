@@ -34,7 +34,6 @@ if has('gui_running')
 endif
 
 " ==== Mappings ====
-map <F2> :TagbarToggle<CR>
 map <F3> :NERDTreeToggle<CR>
 map <F4> :UndotreeToggle<CR>
 map <F5> :source %<CR>
