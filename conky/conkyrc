@@ -45,7 +45,11 @@ conky.config = {
 	template1 = 'wlp3s0', -- WiFi
 
 --- Weather location IDs file
-	template2 = "$HOME/.conky/location_id"
+	template2 = "$HOME/.conky/location_id",
+
+--- Filesystems, besides / and /home
+	template3 = "/media/edin/Data",
+	template4 = "/media/edin/Safe"
 };
 
 -- The formatted text on screen
@@ -65,10 +69,10 @@ ${color1}${exec lscpu | grep 'Model name' | awk '{print $3,$4,$5,$6,$7,$8}'}$col
 ${color1}CPU usage: ${cpu cpu0}%$color
 ${cpugraph cpu0 20,318 6497b1 6497b1}
 ${color1}\
-Core 0: ${freq 1} MHz ${alignr}Temperature: ${exec sensors | grep 'Core 0' | awk '{print $3}'}
+Core 0: ${freq_g 1}GHz${alignr}Temperature: ${exec sensors | grep 'Core 0' | awk '{print $3}'}
 ${cpu cpu1}%$color ${color 6497b1}${alignr}${cpubar cpu1 6, 290}${color}
 ${color1}\
-Core 1: ${freq 2} MHz ${alignr}Temperature: ${exec sensors | grep 'Core 1' | awk '{print $3}'}
+Core 1: ${freq_g 2}GHz${alignr}Temperature: ${exec sensors | grep 'Core 1' | awk '{print $3}'}
 ${cpu cpu2}%$color ${color 6497b1}${alignr}${cpubar cpu2 6, 290}$color
 
 ${color0}TOP ${hr 2}${color}
@@ -81,7 +85,7 @@ ${top name 4}${goto 120}${top pid 4}${goto 205}${top cpu 4}${alignr}${top mem 4}
 
 ${color0}MEMORY ${hr 2}$color
 ${color1}RAM Used: ${mem}/${memmax}
-RAM:  $memperc%${color}${alignr}${membar 6,255}
+RAM: $memperc%${color}${alignr}${membar 6,255}
 ${color1}Swap: $swapperc%${color}${alignr}${swapbar 6,255}
 
 ###################
@@ -89,18 +93,18 @@ ${color1}Swap: $swapperc%${color}${alignr}${swapbar 6,255}
 ###################
 ${color0}DISK ${hr 2}$color
 # HOME
-${color1}sdb3 ${fs_type} (home): ${fs_used_perc /home}%${color}${alignr}${fs_bar 6,180 /home}
+${color1}sdb3 ${fs_type /home} (home): ${fs_used_perc /home}%${color}${alignr}${fs_bar 6,180 /home}
 # ROOT
-${color1}sdb5 ${fs_type} (root): ${fs_used_perc /}%${color}${alignr}${fs_bar 6,180 /}
+${color1}sdb5 ${fs_type /} (root): ${fs_used_perc /}%${color}${alignr}${fs_bar 6,180 /}
 # DATA
-${if_mounted /media/edin/Data}\
-${color1}sda3 ${fs_type} (Data): ${fs_used_perc /media/edin/Data}%${color}\
-${alignr}${fs_bar 6,180 /media/edin/Data}
+${if_mounted $template3}\
+${color1}sda3 ${fs_type $template3} (Data): ${fs_used_perc $template3}%${color}\
+${alignr}${fs_bar 6,180 $template3}
 ${endif}\
 # SAFE
-${if_mounted /media/edin/Safe}\
-${color1}dm-1 ${fs_type} (Safe): ${fs_free_perc /media/edin/Safe}%${color}\
-${alignr}${fs_bar 6,180 /media/edin/Safe}
+${if_mounted $template4}\
+${color1}dm-1 ${fs_type $template4} (Safe): ${fs_used_perc $template4}%${color}\
+${alignr}${fs_bar 6,180 $template4}
 ${endif}\
 #
 ###################
@@ -126,6 +130,10 @@ ${alignr}${upspeedgraph $template1 25,150 011f4b 6497b1}$color
 ${color1}Total: ${totaldown $template1} ${alignr}Total: ${totalup $template1}
 Inbound: ${tcp_portmon 1 32767 count} Outbound: ${tcp_portmon 32768 61000 count}\
 ${alignr}Total: ${tcp_portmon 1 65535 count}
+#
+# 3G interface
+#${if_up wwp0s20u4i6}
+
 
 SSID: $wireless_essid, Channel: ${wireless_channel $template1}
 Link:${goto 20}${wireless_link_qual_perc $template1}% \
@@ -146,9 +154,10 @@ ${color}${endif}
 #     WEATHER    #
 ##################
 # http://news.bbc.co.uk/weather/
+# See conky-colors
+${if_gw}\
 ${color0}WEATHER ${hr 2}${color}
-${if_gw}${color1}\
-${execi 600 /usr/share/conkycolors/bin/conkyBBCWeather loc $template2 c}\
+${color1}${execi 600 /usr/share/conkycolors/bin/conkyBBCWeather loc $template2 c}\
 ${alignr}\
 Temperature: ${execi 600 /usr/share/conkycolors/bin/conkyBBCWeather cur $template2 c}C\
 ${color}${endif}
