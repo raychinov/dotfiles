@@ -26,6 +26,9 @@ alias lsdns="nmcli device show | grep IP4.DNS"
 # generates totp codes
 alias totp='oathtool --base32 --totp "$(cat ~/.oathtool/code.txt)"'
 
+# clears meta data for all jpg files in CWD
+alias clean_jpg='exiftool -all= *.jpg'
+
 # ----------
 # example for using alias with argumets
 alias blah='function _blah(){ echo "First: $1"; echo "Second: $2"; };_blah'
