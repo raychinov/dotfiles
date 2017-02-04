@@ -9,6 +9,9 @@ $ sudo apt-get install curl conky-all jq git
 $ cd ~/
 $ git clone https://github.com/raychinov/dotfiles.git
 $ ln -s ~/dotfiles/conky/conkyrc-harmattan ~/.conkyrc
+$ mkdir ~/.conky
 $ ln -s ~/dotfiles/conky/harmattan-assets/ ~/.conky/harmattan-assets
+
+$ conky -q &
 ```
 
