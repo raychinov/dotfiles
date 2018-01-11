@@ -1,3 +1,30 @@
+# ########## Functions ##########
+
+backup_func () { cp "$1"{,.BK};}
+md5check_func () { md5sum "$1" | grep "$2";}
+extract_func() {
+    if [ -f $1 ] ; then
+      case $1 in
+        *.tar.bz2)   tar xjf $1     ;;
+        *.tar.gz)    tar xzf $1     ;;
+        *.bz2)       bunzip2 $1     ;;
+        *.rar)       unrar e $1     ;;
+        *.gz)        gunzip $1      ;;
+        *.tar)       tar xf $1      ;;
+        *.tbz2)      tar xjf $1     ;;
+        *.tgz)       tar xzf $1     ;;
+        *.zip)       unzip $1       ;;
+        *.Z)         uncompress $1  ;;
+        *.7z)        7z x $1        ;;
+        *)     echo "'$1' cannot be extracted via extract()" ;;
+         esac
+     else
+         echo "'$1' is not a valid file"
+     fi
+}
+
+# ########## Aliases ##########
+
 # moving between dirs
 alias ..="cd .."
 alias ...="cd ../.."
@@ -17,9 +44,6 @@ alias apt-get="sudo apt-get"
 # getting mp3 files with youtube-dl
 alias youtube-audio="youtube-dl -x --audio-format mp3 --audio-quality 0 --restrict-filenames"
 
-# connect with RDP
-alias taburetka='rdesktop -g 1600x822 192.168.0.99 > /dev/null 2>&1 &'
-
 # list DNS servers used by all interfaces
 alias lsdns="nmcli device show | grep IP4.DNS"
 
@@ -28,6 +52,31 @@ alias totp='oathtool --base32 --totp "$(cat ~/.oathtool/code.txt)"'
 
 # clears meta data for all jpg files in CWD
 alias clean_jpg='exiftool -all= *.jpg'
+
+# edit bashrc
+alias bashrc="vim ~/.bashrc && source ~/.bashrc"
+
+# list the top 10 processes using most of the RAM
+alias whereismyram='ps aux --sort=-%mem | head | cut -c -150'
+
+# generate 28 char random alphanumeric string
+alias genpasswd="strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 28 | tr -d '\n'; echo"
+
+# generate password using dictionary words, needs $ sudo cpan Crypt::HSXKPasswd
+alias newpass='hsxkpasswd'
+
+# search for file in CWD, usage: $ ff [filename]
+alias ff='find . -type f -name'
+
+# aliases using functions
+# backups a file, like [file].BK in the same dir, usage: $ bk [file]
+alias bk='backup_func'
+
+# usage: $ md5check [file] [key]
+alias md5check='md5check_func'
+
+# usage: $ extract [file]
+alias extract='extract_func'
 
 # ----------
 # example for using alias with argumets
