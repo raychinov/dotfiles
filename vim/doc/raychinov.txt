@@ -1,16 +1,25 @@
 *raychinov.txt* Notes on my Vim usage configurations
 
 ==============================================================================
-1. Mappings												*raychinov-mappings*
+1. Mappings                       *raychinov-mappings*
+<F1>        Default setting
+            :help
 
-<F3>					Toggle the NERDTree panel
-						:NERDTreeToggle
+<F3>        Toggle the NERDTree panel
+            :NERDTreeToggle
 
-<F4>					Toggle the UndoTree panel
-						:UndotreeToggle
+<F4>        Toggle the UndoTree panel
+            :UndotreeToggle
 
-<F5>					Source the currently open file
-						:source %<CR>
+<F5>        Source the currently open file
+            :source %
 
-<F6>					Do a spell check, underlining misspelled words
-						:setlocal spell! spelllang=en_us<CR>
+<F6>        Do a spell check, underlining misspelled words
+            :setlocal spell! spelllang=en_us<CR>
+
+<F7>        Execute the currently opened file in terminal
+            :!%:p
+
+<F9>        Toggle auto-indenting for code paste
+            :set invpaste
+
