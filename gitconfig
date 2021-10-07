@@ -1,0 +1,16 @@
+[core]
+  editor = vim
+  pager = less -r
+[alias]
+  dt = difftool
+  df = diff                                                                                                                                                                                 manifest = ls-tree -r --name-only --full-tree HEAD
+  lg= log --abbrev-commit --graph --decorate --oneline -n 15
+  lga = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h %C(reset)-%C(bold green)%d%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(yellow) (%ar)%C(reset)' --all
+  stage = add
+  st = status
+  unstage = reset HEAD --
+#[rerere]
+# enabled = true
+[color]
+  ui = true
+
