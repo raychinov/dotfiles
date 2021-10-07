@@ -38,32 +38,21 @@ alias vi="vim"
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
 
-# sudo apt-get as it is always what you want.
-alias apt-get="sudo apt-get"
-
-# getting mp3 files with youtube-dl
-alias youtube-audio="youtube-dl -x --audio-format mp3 --audio-quality 0 --restrict-filenames"
-
 # list DNS servers used by all interfaces
 alias lsdns="nmcli device show | grep IP4.DNS"
 
-# generates totp codes
-alias totp='oathtool --base32 --totp "$(cat ~/.oathtool/code.txt)"'
-
-# clears meta data for all jpg files in CWD
-alias clean_jpg='exiftool -all= *.jpg'
-
 # edit bashrc
 alias bashrc="vim ~/.bashrc && source ~/.bashrc"
+alias bashalias="vim ~/.bash_aliases && source ~/.bash_aliases"
+alias vimrc="vim ~/.vim/vimrc.vim"
+alias gitconf='vim ~/.gitconfig'
+
 
 # list the top 10 processes using most of the RAM
 alias whereismyram='ps aux --sort=-%mem | head | cut -c -150'
 
 # generate 28 char random alphanumeric string
 alias genpasswd="strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 28 | tr -d '\n'; echo"
-
-# generate password using dictionary words, needs $ sudo cpan Crypt::HSXKPasswd
-alias newpass='hsxkpasswd'
 
 # search for file in CWD, usage: $ ff [filename]
 alias ff='find . -type f -name'
